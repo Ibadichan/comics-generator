@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @font-face {
+        font-family: "sandyonenormal";
+        src: url("./fonts/v_sandyone-webfont.woff2") format("woff2"),
+          url("./fonts/v_sandyone-webfont.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        color: black;
+        background-color: white;
+        font-weight: 400;
+        font-family: "sandyonenormal";
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+
+      .comics-pages__item {
+        position: relative;
+        width: 21cm;
+        border: 2px solid black;
+      }
+
+      .comics-pages__text {
+        position: absolute;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>cassia generator</h1>
+
+    <form id="generator-form">
+      <fieldset>
+        <legend>Параметры</legend>
+        <p>
+          <label for="character-name">Имя вашего персонажа:</label>
+          <input
+            type="text"
+            id="character-name"
+            name="character-name"
+            required
+          />
+        </p>
+        <p>
+          <label for="costume-color">Цвет костюма вашего персонажа:</label>
+          <select id="costume-color" name="costume-color" required>
+            <option value="">-- Выберите цвет--</option>
+            <option value="red">Красный</option>
+            <option value="blue">Синий</option>
+            <option value="green">Зеленый</option>
+            <option value="black">Черный</option>
+            <option value="brown">Коричневый</option>
+            <option value="yellow">Желтый</option>
+          </select>
+        </p>
+        <p>
+          <label for="hair-color">Цвет волос вашего персонажа:</label>
+          <select id="hair-color" name="hair-color" required>
+            <option value="">-- Выберите цвет--</option>
+            <option value="red">Красный</option>
+            <option value="blue">Синий</option>
+            <option value="green">Зеленый</option>
+            <option value="black">Черный</option>
+            <option value="brown">Коричневый</option>
+            <option value="yellow">Желтый</option>
+          </select>
+        </p>
+      </fieldset>
+      <p>
+        <button type="submit">Сгенерировать</button>
+        <button type="button" onclick="window.print()">Печать PDF</button>
+      </p>
+    </form>
+
+    <div class="comics-pages"></div>
+
+    <script>
+      const form = document.getElementById("generator-form");
+      const pages = document.querySelector(".comics-pages");
+
+      function handleSubmit(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        const costumeColor = formData.get("costume-color");
+        const hairColor = formData.get("hair-color");
+        const characterName = formData.get("character-name");
+
+        pages.innerHTML = `<div class="comics-pages__item">
+            <img src="./img/09_costume_${costumeColor}_hair_${hairColor}.jpeg" />
+            <span class="comics-pages__text" style="top: 39%; left: 67%;">${characterName}?</span>
+            <span class="comics-pages__text" style="top: 68%; left: 50%; width: 155px;">He's from my home planet, ${characterName}! Another one, just like Ellie! </span>
+          </div>`;
+      }
+
+      form.addEventListener("submit", handleSubmit);
+    </script>
+  </body>
+</html>
